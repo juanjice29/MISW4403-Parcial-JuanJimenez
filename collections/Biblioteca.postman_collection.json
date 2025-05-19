@@ -1,0 +1,468 @@
+{
+	"info": {
+		"_postman_id": "820e8927-3eec-48d3-b77c-434effa248e1",
+		"name": "Biblioteca",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44843174",
+		"_collection_link": "https://juanjice.postman.co/workspace/parcial-apis~817d5dcf-15dd-45fb-ba4b-f52caf9fbc4f/collection/44843174-820e8927-3eec-48d3-b77c-434effa248e1?action=share&source=collection_link&creator=44843174"
+	},
+	"item": [
+		{
+			"name": "Add Biblioteca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Biblioteca Nacional\",\r\n  \"direccion\": \"Calle 24 #5-60\",\r\n  \"ciudad\": \"Bogotá\",\r\n  \"horarioAtencion\": \"08:00-18:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/libraries",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add Biblioteca",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Biblioteca Nacional\",\r\n  \"direccion\": \"Calle 24 #5-60\",\r\n  \"ciudad\": \"Bogotá\",\r\n  \"horarioAtencion\": \"08:00-18:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/libraries",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"libraries"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Add Invalid Biblioteca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function() {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"\",\r\n  \"direccion\": \"Calle 24 #5-60\",  \r\n  \"horarioAtencion\": \"18:00-08:00\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/libraries",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add Invalid Biblioteca",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"\",\r\n  \"direccion\": \"Calle 24 #5-60\",  \r\n  \"horarioAtencion\": \"18:00-08:00\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/libraries",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"libraries"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get All Bibliotecas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of libraries > ' + 0, function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/libraries",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get All Bibliotecas",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/libraries",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"libraries"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get Biblioteca by Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Datos de la biblioteca a crear\r",
+							"const nuevaBiblioteca = {\r",
+							"    nombre: \"Biblioteca Nueva\",\r",
+							"    direccion: \"Calle 24 #5-60\",\r",
+							"    ciudad: \"Bogotá\",\r",
+							"    horarioAtencion: \"08:00-18:00\"\r",
+							"};\r",
+							"\r",
+							"// Hacemos un POST para crear la biblioteca\r",
+							"pm.sendRequest({\r",
+							"    url: pm.environment.get(\"base_url\") + \"/libraries\",\r",
+							"    method: \"POST\",\r",
+							"    header: {\r",
+							"        \"Content-Type\": \"application/json\"\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: \"raw\",\r",
+							"        raw: JSON.stringify(nuevaBiblioteca)\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.error(\"Error al crear la biblioteca:\", err);\r",
+							"    } else {\r",
+							"        const jsonResponse = res.json();\r",
+							"        // Guardamos el ID en una variable de entorno\r",
+							"        pm.environment.set(\"biblioteca_id\", jsonResponse.id);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/libraries/{{biblioteca_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"{{biblioteca_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Biblioteca Does not exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/libraries/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Biblioteca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Biblioteca Nacional Actualizada\",\r\n  \"direccion\": \"Calle 24 #5-60\",\r\n  \"ciudad\": \"Bogotá\",\r\n  \"horarioAtencion\": \"09:00-17:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/libraries/{{biblioteca_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"{{biblioteca_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update biblioteca does not exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Biblioteca Nacional Actualizada\",\r\n  \"direccion\": \"Calle 24 #5-60\",\r\n  \"ciudad\": \"Bogotá\",\r\n  \"horarioAtencion\": \"09:00-17:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/libraries/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete biblioteca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function() {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/libraries/{{biblioteca_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"{{biblioteca_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete biblioteca doesnt exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/libraries/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

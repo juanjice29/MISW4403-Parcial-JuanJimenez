@@ -1,0 +1,467 @@
+{
+	"info": {
+		"_postman_id": "4251648d-5a08-49e8-94f5-d8df5914737b",
+		"name": "Biblioteca-Libro",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44843174",
+		"_collection_link": "https://juanjice.postman.co/workspace/parcial-apis~817d5dcf-15dd-45fb-ba4b-f52caf9fbc4f/collection/44843174-4251648d-5a08-49e8-94f5-d8df5914737b?action=share&source=collection_link&creator=44843174"
+	},
+	"item": [
+		{
+			"name": "Add Biblioteca-Libro",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Datos de la biblioteca a crear\r",
+							"const nuevaBiblioteca = {\r",
+							"    nombre: \"Biblioteca Nueva\",\r",
+							"    direccion: \"Calle 24 #5-60\",\r",
+							"    ciudad: \"Bogotá\",\r",
+							"    horarioAtencion: \"08:00-18:00\"\r",
+							"};\r",
+							"\r",
+							"// Hacemos un POST para crear la biblioteca\r",
+							"pm.sendRequest({\r",
+							"    url: pm.environment.get(\"base_url\") + \"/libraries\",\r",
+							"    method: \"POST\",\r",
+							"    header: {\r",
+							"        \"Content-Type\": \"application/json\"\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: \"raw\",\r",
+							"        raw: JSON.stringify(nuevaBiblioteca)\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.error(\"Error al crear la biblioteca:\", err);\r",
+							"    } else {\r",
+							"        const jsonResponse = res.json();\r",
+							"        // Guardamos el ID en una variable de entorno\r",
+							"        pm.environment.set(\"biblioteca_id\", jsonResponse.id);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"// Datos de la biblioteca a crear\r",
+							"const nuevoLibro= {\r",
+							"  titulo: \"Cien años de soledad\",\r",
+							"  autor: \"Gabriel García Márquez\",\r",
+							"  fechaPublicacion: \"1967-05-30\",\r",
+							"  isbn: \"1234567890123\"\r",
+							"};\r",
+							"\r",
+							"// Hacemos un POST para crear la biblioteca\r",
+							"pm.sendRequest({\r",
+							"    url: pm.environment.get(\"base_url\") + \"/books\",\r",
+							"    method: \"POST\",\r",
+							"    header: {\r",
+							"        \"Content-Type\": \"application/json\"\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: \"raw\",\r",
+							"        raw: JSON.stringify(nuevoLibro)\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.error(\"Error al crear la biblioteca:\", err);\r",
+							"    } else {\r",
+							"        const jsonResponse = res.json();\r",
+							"        // Guardamos el ID en una variable de entorno\r",
+							"        pm.environment.set(\"libro_id\", jsonResponse.id);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"titulo\": \"Cien años de soledad\",\r\n  \"autor\": \"Gabriel García Márquez\",\r\n  \"fechaPublicacion\": \"1967-05-30\",\r\n  \"isbn\": \"1234567890123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/libraries/{{biblioteca_id}}/books/{{libro_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"{{biblioteca_id}}",
+						"books",
+						"{{libro_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Biblioteca invalid libro",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/libraries/{{biblioteca_id}}/books/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"{{biblioteca_id}}",
+						"books",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Libros from Biblioteca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test('Number of books > ' + 0, function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/libraries/{{biblioteca_id}}/books",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"{{biblioteca_id}}",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Libro by id Biblioteca",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/libraries/{{biblioteca_id}}/books/{{libro_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"{{biblioteca_id}}",
+						"books",
+						"{{libro_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Libro Does not exist Biblioteca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/libraries/{{biblioteca_id}}/books/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"{{biblioteca_id}}",
+						"books",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Libro Asociated biblioteca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"id\": \"{{libro_id}}\",\r\n    \"titulo\": \"Cien años de soledad\",\r\n    \"autor\": \"Gabriel García Márquez\",\r\n    \"fechaPublicacion\": \"1967-05-30\",\r\n    \"isbn\": \"1234567890123\"\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/libraries/{{biblioteca_id}}/books",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"{{biblioteca_id}}",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Libro not exist asociated biblioteca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"titulo\": \"Libro inexistente\",\r\n    \"autor\": \"Autor desconocido\",\r\n    \"fechaPublicacion\": \"1900-01-01\",\r\n    \"isbn\": \"0000000000000\"\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/libraries/{{biblioteca_id}}/books",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"{{biblioteca_id}}",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Libro asociated biblioteca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function() {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/libraries/{{biblioteca_id}}/books/{{libro_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"{{biblioteca_id}}",
+						"books",
+						"{{libro_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Libro does not asociated biblioteca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/libraries/{{biblioteca_id}}/books/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"libraries",
+						"{{biblioteca_id}}",
+						"books",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
