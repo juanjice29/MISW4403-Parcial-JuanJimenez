@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { LibroService } from './libro.service';
 
-@Module({})
+@Module({
+  providers: [LibroService]
+})
 export class LibroModule {}
