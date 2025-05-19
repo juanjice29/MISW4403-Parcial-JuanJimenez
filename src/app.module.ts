@@ -11,6 +11,7 @@ import { BibliotecaLibroModule } from './biblioteca-libro/biblioteca-libro.modul
 @Module({
   imports: [BibliotecaModule,
     LibroModule,
+    BibliotecaLibroModule,
     TypeOrmModule.forRoot({
      type: 'postgres',
      host: 'localhost',
@@ -22,7 +23,7 @@ import { BibliotecaLibroModule } from './biblioteca-libro/biblioteca-libro.modul
      dropSchema: true,
      synchronize: true
    }),
-    BibliotecaLibroModule
+    
   ],
   controllers: [AppController],
   providers: [AppService],
